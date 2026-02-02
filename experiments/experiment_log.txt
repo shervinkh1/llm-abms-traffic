@@ -1,0 +1,13 @@
+Experiment 1:
+Agents = 3
+Personalities = [aggressive, cautious, cautious]
+Steps = 10
+Observation:
+- gradual slowdown
+- queue formation without explicit traffic rule
+
+Experiment 2:
+Changed first agent to cautious
+Result:
+- smoother flow
+- less congestion
