@@ -3,8 +3,8 @@ from src.environment import Environment
 
 def run_simulation(steps=10):
     agents = [
-        Agent(1, "cautious"),
-        Agent(2, "aggressive"),
+        Agent(1, "aggressive"),
+        Agent(2, "cautious"),
         Agent(3, "cautious")
     ]
 
