@@ -12,11 +12,9 @@ class Agent:
         return front_agent.position - self.position
 
     def reason(self, distance):
-        # --- 1. بررسی حافظه‌ی اخیر ---
-        recent_memory = self.memory[-2:]  # دو فکر اخیر
+        recent_memory = self.memory[-2:]
         recently_in_danger = any("خطر" in m for m in recent_memory)
 
-        # --- 2. تصمیم‌گیری ---
         if distance is not None and distance < 5:
             if self.personality == "aggressive":
                 action = "slow"
@@ -33,10 +31,11 @@ class Agent:
             action = "move"
             thought = "شرایط امنه، حرکت می‌کنم"
 
-        # --- 3. ذخیره در حافظه ---
         self.memory.append(thought)
-        return action, thought
+        if len(self.memory) > 3:  # memory decay
+            self.memory.pop(0)
 
+        return action, thought
 
     def act(self, action):
         if action == "brake":
