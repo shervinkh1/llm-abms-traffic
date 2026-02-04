@@ -2,42 +2,48 @@ class Agent:
     def __init__(self, agent_id, personality):
         self.id = agent_id
         self.personality = personality  # aggressive | cautious
-        self.speed = 3
-        self.position = 0
-        self.memory = []
+        self.position = 0.0
+        self.speed = 0.0
+        self.memory = []  # ["danger", "move"]
 
+    # ---------- Perception ----------
     def perceive(self, front_agent):
         if front_agent is None:
             return None
         return front_agent.position - self.position
 
+    # ---------- Reasoning ----------
     def reason(self, distance):
-        recent_memory = self.memory[-2:]
-        recently_in_danger = any("خطر" in m for m in recent_memory)
-
+        # observation
         if distance is not None and distance < 5:
+            obs = "danger"
+        else:
+            obs = "move"
+
+        # bounded memory (size = 3)
+        self.memory.append(obs)
+        if len(self.memory) > 3:
+            self.memory.pop(0)
+
+        danger = self.memory.count("danger")
+        move = self.memory.count("move")
+
+        if danger > move:
             if self.personality == "aggressive":
                 action = "slow"
-                thought = "فاصله کمه ولی عجولم، کمی ترمز می‌کنم"
+                thought = f"حافظه={self.memory} → خطر غالب، کاهش سرعت"
             else:
                 action = "brake"
-                thought = "خطر زیاده، ترمز کامل"
-
-        elif recently_in_danger:
-            action = "slow"
-            thought = "اخیراً خطر حس کردم، محتاط‌تر حرکت می‌کنم"
-
+                thought = f"حافظه={self.memory} → خطر غالب، ترمز"
         else:
             action = "move"
-            thought = "شرایط امنه، حرکت می‌کنم"
-
-        self.memory.append(thought)
-        if len(self.memory) > 3:  # memory decay
-            self.memory.pop(0)
+            thought = f"حافظه={self.memory} → روند امن، حرکت"
 
         return action, thought
 
-    def act(self, action):
+    # ---------- Action ----------
+    def act(self, action, front_position=None):
+        # speed update
         if action == "brake":
             self.speed = max(0, self.speed - 2)
         elif action == "slow":
@@ -45,4 +51,11 @@ class Agent:
         elif action == "move":
             self.speed = min(5, self.speed + 1)
 
-        self.position += self.speed
+        # tentative position
+        new_position = self.position + self.speed
+
+        # single-lane physical constraint
+        if front_position is not None:
+            new_position = min(new_position, front_position - 0.1)
+
+        self.position = new_position

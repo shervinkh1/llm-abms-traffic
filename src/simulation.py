@@ -8,9 +8,9 @@ def run_simulation(steps=10):
         Agent(3, "cautious")
     ]
 
-    # ✅ تنظیمات مورد نظر تو
-    initial_positions = [0, 2, 5]
-    initial_speeds = [2, 1, 0]
+    # ✅ تنظیمات نهایی
+    initial_positions = [0, 2, 3]
+    initial_speeds = [3, 2, 1]
 
     env = Environment(
         agents,
