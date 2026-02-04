@@ -25,6 +25,7 @@ simple micro-level agent behaviors.
 ## Installation
 
 Create a virtual environment and install the required dependencies:
+
 **Windows**
 ```bash
 python -m venv venv
