@@ -6,7 +6,6 @@ class Environment:
             agent.position = float(pos)
             agent.speed = float(spd)
 
-    # ✅ پیدا کردن عامل جلویی بر اساس position (نه index)
     def get_front_agent(self, agent):
         front_agents = [a for a in self.agents if a.position > agent.position]
         if not front_agents:

@@ -43,7 +43,6 @@ class Agent:
 
     # ---------- Action ----------
     def act(self, action, front_position=None):
-        # speed update
         if action == "brake":
             self.speed = max(0, self.speed - 2)
         elif action == "slow":
@@ -51,7 +50,6 @@ class Agent:
         elif action == "move":
             self.speed = min(5, self.speed + 1)
 
-        # tentative position
         new_position = self.position + self.speed
 
         # single-lane physical constraint

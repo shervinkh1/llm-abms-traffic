@@ -25,14 +25,21 @@ simple micro-level agent behaviors.
 ## Installation
 
 Create a virtual environment and install the required dependencies:
+**Windows**
 ```bash
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 ```
+**Linux / macOS**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 ## Running the Simulation
 ```bash
-python src/run_simulation.py
+python run_simulation.py
 ```
 ## Running Experiments (Notebook)
 ```bash
